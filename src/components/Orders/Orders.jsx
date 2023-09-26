@@ -3,7 +3,7 @@ import Cart from "../Cart/Cart";
 import { useLoaderData } from "react-router-dom";
 import ReviewItem from "../ReviewItem/ReviewItem";
 import "./Order.css";
-import { removeFromDb } from "../../utilities/fakedb";
+import { deleteShoppingCart, removeFromDb } from "../../utilities/fakedb";
 
 const Orders = () => {
   const savedCart = useLoaderData(); // ekane useloader teke savadcart[...] er data gulu savedCart var e store hobe.
@@ -14,6 +14,10 @@ const Orders = () => {
     const remaining = cart.filter((product) => product.id !== id);
     setCart(remaining);
     removeFromDb(id);
+  };
+  const handleClearCart = () => {
+    setCart([]);
+    deleteShoppingCart();
   };
 
   return (
@@ -30,7 +34,7 @@ const Orders = () => {
       <div className="cart-container">
         {/* <Cart cart={savedCart}></Cart>
         ekane savecart er data gulu props hisebe patano hocce */}
-        <Cart cart={cart}></Cart>
+        <Cart cart={cart} handleClearCart={handleClearCart}></Cart>
       </div>
     </div>
   );
